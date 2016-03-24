@@ -34,11 +34,11 @@ dev.off()
 
 
 # Number of sources
-numfact(nycdat[, -c(1, 2)], seed1 = 895833)
+nf <- numfact(nycdat[, -c(1, 2)], seed1 = 895833)
 
 
 # APCA
-apca1 <- apca(nycdat[, -2], nycdat[, 2], nsources = 8)
+apca1 <- apca(nycdat[, -2], nycdat[, 2], nsources = nf)
 ncons <- ncol(nycdat) - 2
 
 profs <- apca1$vmax$loadings[1 : ncons, ]
@@ -56,7 +56,7 @@ profs <- gather(profs, source, value, -cons)
 ggplot(profs, aes(x = cons, y = value, fill = value)) + 
     geom_bar(stat="identity") +
     xlab("") + theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust= 0.4)) + 
-    facet_wrap(~ source, ncol = 4)
+    facet_wrap(~ source, ncol =3)
 
 
 

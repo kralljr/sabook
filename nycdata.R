@@ -48,3 +48,14 @@ nycdat <- nycdat[keeps, ]
 
 
 write.csv(nycdat, file = "nycdat.csv", row.names = F)
+
+# Create uncertainties
+P <- ncol(nycdat) - 1
+unc <- matrix(rep(1, nrow(nycdat) * P), ncol = P)
+unc <- data.frame(nycdat$Date, unc)
+colnames(unc) <- colnames(nycdat)
+write.csv(unc, file = "nycunc.csv", row.names = F)
+
+
+
+

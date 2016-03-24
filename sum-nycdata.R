@@ -22,19 +22,24 @@ sum1["Median"]
 length(dates)
 
 
-sulf <- select(nycdat, Date, ammonium_ion, sulfate)
-colnames(sulf)[2 : 3] <- c("Ammonium ion", "Sulfate")
-sulf <- gather(sulf, cons, value, -Date)
+resoil <- select(nycdat, Date, nickel, vanadium, lead)
+resoil <- gather(resoil, cons, value, -Date)
+resoil$cons <- factor(resoil$cons, levels = c("nickel", "vanadium", "lead"), labels = c("Nickel", "Vanadium", "Lead"))
+#resoil <- filter(resoil, Date < as.Date("2006-01-01"))
+
 
 size1 <- 18
-sulfplot <- ggplot(sulf, aes(x = Date, y = value)) + geom_line() + 
+resoilplot <- ggplot(resoil, aes(x = Date, y = value)) + 
+  geom_line() + 
   ylab(expression(paste("Concentration (", mu, "g/m"^3, ")"))) +
   xlab("") + theme_bw() + 
   theme(text = element_text(size = size1)) +
   facet_wrap(~cons, ncol = 1, scales = "free")
-pdf("sulfplot.pdf")
-sulfplot
+pdf("resoilplot.pdf", height = 7, width = 8)
+resoilplot
 dev.off()
 
 
-
+# Correlations
+resoilC <- spread(resoil, cons, value)
+cor(resoilC[, -1])

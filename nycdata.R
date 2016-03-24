@@ -24,15 +24,6 @@ nycdat <- consConc[["36081.0124"]]
 # 2003 - 2006
 years <- substr(nycdat[, 1], 1, 4) %>% as.numeric()
 keeps <- years <= 2006 & years >= 2003
-
-# Check summary
-dates <- nycdat[keeps, 1]
-summary(dates)
-diff1 <- diff(dates)
-summary(as.numeric(diff1))
-length(dates)
-
-
 nycdat <- nycdat[keeps, ]
 
 
@@ -40,7 +31,7 @@ nycdat <- nycdat[keeps, ]
 #########
 # Bad dates
 # Remove bad dates
-dates <- c("2006-01-05", "2006-01-20") %>% as.Date()
+dates <- c("2006-01-05", "2006-01-20", "2005-02-09") %>% as.Date()
 # Remove days around 4th of July, New Years
 month <- substr(nycdat[, 1], 6, 7) %>% as.numeric()
 day <- substr(nycdat[, 1], 9, 10) %>% as.numeric()

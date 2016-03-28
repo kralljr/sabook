@@ -1,3 +1,4 @@
+wd1 <- "~/Dropbox/SAbook"
 
 # Load libraries
 library(handles)
@@ -35,7 +36,7 @@ resoilplot <- ggplot(resoil, aes(x = Date, y = value)) +
   xlab("") + theme_bw() + 
   theme(text = element_text(size = size1)) +
   facet_wrap(~cons, ncol = 1, scales = "free")
-pdf("resoilplot.pdf", height = 7, width = 8)
+pdf(file.path(wd1, "resoilplot.pdf"), height = 7, width = 8)
 resoilplot
 dev.off()
 
@@ -43,3 +44,44 @@ dev.off()
 # Correlations
 resoilC <- spread(resoil, cons, value)
 cor(resoilC[, -1])
+
+
+
+# Proportion plot
+
+# Function to fix names
+namefun <- function(names1) {
+    # Fix underline
+    names1 <- as.character(names1)
+  names1 <- strsplit(names1, "\\_") %>% sapply(., function(x) paste(x, collapse = " "))
+
+    names1[which(names1 == "OC")] <- "organic carbon"
+    # capitalize
+    #?
+    names1
+
+}
+
+
+
+
+cons <- nycdat[, -c(1, 2)]
+cons <- sweep(cons, 1, nycdat[, 2], "/")
+prop2 <- apply(cons, 2, mean)
+
+prop <- apply(cons, 2, mean) / mean(nycdat[, 2])
+prop <- data.frame(names(prop), round(prop, 3), round(prop2, 3))
+colnames(prop) <- c("Name", "prop", "prop2")
+prop$Name <- namefun(prop$Name)
+
+gprop <- ggplot(prop, aes(x = Name, y = prop2, fill = Name)) +
+  geom_bar(stat = "identity") +
+  xlab("") + ylab(expression("Average proportion of total PM"[2.5])) + 
+  scale_fill_grey() + 
+  theme_bw() +  
+  theme(axis.text.x = element_text(angle = 90, size = 12, hjust = 1, vjust = 0.5), 
+        legend.position = "none") 
+
+pdf(file.path(wd1, "nyc-prop.pdf"), height = 4, width = 4)
+gprop
+dev.off()

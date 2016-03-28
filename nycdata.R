@@ -23,7 +23,7 @@ nycdat <- consConc[["36081.0124"]]
 
 # 2003 - 2006
 years <- substr(nycdat[, 1], 1, 4) %>% as.numeric()
-keeps <- years <= 2006 & years >= 2003
+keeps <- years <= 2005 & years >= 2003
 nycdat <- nycdat[keeps, ]
 
 

@@ -23,6 +23,14 @@ sum1["Median"]
 length(dates)
 
 
+# Check correlations
+cor1 <- cor(nycdat[, -c(1, 2)]) %>% round(., 1)
+apply(cor1, 1, function(x) {
+  cn1 <- colnames(cor1)[which(x > 0.6)]
+  paste(cn1, collapse = ";")
+})
+
+
 resoil <- select(nycdat, Date, nickel, vanadium, lead)
 resoil <- gather(resoil, cons, value, -Date)
 resoil$cons <- factor(resoil$cons, levels = c("nickel", "vanadium", "lead"), labels = c("Nickel", "Vanadium", "Lead"))

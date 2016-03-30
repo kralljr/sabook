@@ -1,3 +1,5 @@
+wd1 <- "~/Dropbox/SAbook"
+
 # Load numfact functions
 source("numfact.R")
 
@@ -27,7 +29,7 @@ scree1 <- ggplot(sdev, aes(x = number, y = sdev)) +
   theme_bw() + 
   theme(panel.grid.major = element_blank(), 
   panel.grid.minor = element_blank())  
-pdf("screeplot.pdf", height = 3, width = 6)
+pdf(file.path(wd1,"screeplot.pdf"), height = 3, width = 6)
 scree1
 dev.off()
 
@@ -67,13 +69,13 @@ profsplot <- ggplot(profs, aes(x = cons, y = value, fill = value)) +
     geom_bar(stat="identity") +
     xlab("") + theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust= 0.4)) + 
     facet_wrap(~ source, ncol =3)
-pdf("apca-profplot.pdf")
+pdf(file.path(wd1,"apca-profplot.pdf"))
 profsplot
 dev.off()
 
 
 concplot <- ggplot(conc, aes(x = Date, y = value)) + geom_line() + 
  geom_point() + facet_wrap(~ source, ncol = 3) 
-pdf("apca-concplot.pdf")
+pdf(file.path(wd1, "apca-concplot.pdf"))
 concplot
 dev.off()

@@ -38,7 +38,7 @@ namefun <- function(names1) {
 
 # Profile results
 #skips <- (4 + P) * 2 + 5
-skips <- 5
+#skips <- 5
 skips <- 10 + P
 prof <- read.table(file.path(wd1, "nycrun", "nycrun_profiles.txt"), skip = skips, nrows = P, sep = "\t", header = F)[, -1]
 
@@ -60,6 +60,13 @@ prof2 <- gather(prof2, source, value, -Name)
 prof2$Name <- namefun(prof2$Name)
 
 
+# 1: secondary sulfate
+# 2: soil?
+# 3: gasoline?  burning?
+# 4: residual oil/combustion
+# 5: secondary nitrate
+# 6: diesel/mobile
+
 # Plot profiles
 scale1 <- rep(brewer.pal(8, "Dark2"), length = P )
 gprof <- ggplot(prof2, aes(x = Name, y = value, fill = Name)) + 
@@ -67,7 +74,7 @@ gprof <- ggplot(prof2, aes(x = Name, y = value, fill = Name)) +
   theme_bw() + 
   scale_fill_grey() + 
   geom_bar(stat="identity") +
-  xlab("") + ylab("Proportion of total source") +  
+  xlab("") + ylab("Proportion of total constituent") +  
   theme(axis.title.y = element_text(size = 14),
         strip.text.x = element_text(size = 14),
         axis.text.x = element_text(angle = 90, 

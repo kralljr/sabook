@@ -19,12 +19,12 @@ nycdat[, 1] <- as.Date(nycdat[, 1])
 
 # Scree plot
 pr1 <- prcomp(nycdat[, -c(1, 2)], scale = T)
-sdev <- data.frame(seq(1, length(pr1$sdev)), pr1$sdev)
+sdev <- data.frame(seq(1, length(pr1$sdev)), pr1$sdev^2)
 colnames(sdev) <- c("number", "sdev")
 scree1 <- ggplot(sdev, aes(x = number, y = sdev)) + 
   geom_point() + geom_line() +
   geom_hline(yintercept = 1, linetype = 2, colour = "grey") + 
-  ylab("PC standard deviations") + 
+  ylab("Eigenvalue") + 
   xlab("Number of PCs") + 
   theme_bw() + 
   theme(panel.grid.major = element_blank(), 

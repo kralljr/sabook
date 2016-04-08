@@ -74,7 +74,7 @@ gprof <- ggplot(prof2, aes(x = Name, y = value, fill = Name)) +
   theme_bw() + 
   scale_fill_grey() + 
   geom_bar(stat="identity") +
-  xlab("") + ylab("Proportion of total constituent") +  
+  xlab("") + ylab("Percent of total constituent") +  
   theme(axis.title.y = element_text(size = 14),
         strip.text.x = element_text(size = 14),
         axis.text.x = element_text(angle = 90, 

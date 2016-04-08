@@ -99,7 +99,7 @@ conc <- gather(conc, source, value, -Date)
 conc$Date <- as.Date(conc$Date, format = "%m/%d/%y")
 
 # Concentration plots
-conc2 <- filter(conc, Date < as.Date("2005-01-01"))
+conc2 <- dplyr::filter(conc, Date < as.Date("2005-01-01"))
 gconc <- ggplot(conc2, aes(x = Date, y = value)) + geom_line() +
   geom_point() +
   theme_bw() + 
